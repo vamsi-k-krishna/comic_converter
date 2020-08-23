@@ -12,19 +12,10 @@ def is_landscape(image):
 def process_image(source, destination):
     constant_width = 744
     try:
-        # convert to black and white
-        image = Image.open(source, "r").convert("L")
-
         # rotate the image if it's a double-page
         if is_landscape(image):
             image = image.transpose(Image.ROTATE_90)
-
-        # Resize the image to fit on a kindle.
-        image = image.resize(fill_width(constant_width, *image.size), Image.ANTIALIAS)
-
         # Do some slight sharpening.
-        image = ImageEnhance.Sharpness(image).enhance(2)
-
         image.save(destination)
 
         return True
